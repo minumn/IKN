@@ -13,7 +13,7 @@ def main(argv):
 	# TO DO Your Code
 	serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # INET equals streaming socket equals TCP
 	serversocket.bind((HOST,PORT)) 
-	serversocket.listen(3) # We want to queue up to just one client
+	serversocket.listen(1) # We want to queue up to just one client
 
 	while(1):
 		#Wait for connections
@@ -22,8 +22,8 @@ def main(argv):
 		
 		clientsocket.send("Hello. Connection established. \0")
 
-		#filename = Lib.readTextTCP(clientsocket)
-		filename = clientsocket.recv(BUFSIZE)		
+		filename = Lib.readTextTCP(clientsocket) #connect with client
+		#filename = clientsocket.recv(BUFSIZE)	#Connect with telnet	
 		print '1 ', filename
 			#filename = exctractFilename(text)
 		#filesize = 0
@@ -43,10 +43,10 @@ def main(argv):
 		data = "."
 
 		#while (1):
-		for i in range(0,1):
+		for i in range(0,0):
 			data = clientsocket.recv(BUFSIZE)
 			clientsocket.send(data + "\0")
-			if data == "quit": break
+#			if data == "quit": break
 			print data
 			i = i+1
 
