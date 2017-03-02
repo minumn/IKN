@@ -36,25 +36,7 @@ def main(argv):
 			sendFile(filename, filesize, clientsocket)
 		else: clientsocket.send("File " + filename + "doesnt exist. \0")
 	
-		print '3 '		
-	
-			#clientsocket.close()
-			
-			
-		print '4 '
-		data = "."
-	
-			#while (1):
-		for i in range(0,0):
-			data = clientsocket.recv(BUFSIZE)
-			clientsocket.send(data + "\0")
-			#if data == "quit": break
-			print data
-			i = i+1
-	
-	
-		#clientsocket.shutdown()
-		print 'Closing connection ', address
+		print '3 Closing connection ', address
 		clientsocket.close()
 
 	#except socket.error, msg:
@@ -68,14 +50,12 @@ def main(argv):
 	
 def sendFile(fileName,  fileSize,  conn):
 	# TO DO Your Code
-	#length = BUFSIZE
 	#fileName = Lib.extractFilename(fileName)
 	file_obj = open(fileName, "r")
-	#print 'File to send: ', file_obj.read()
 	
 	Lib.writeTextTCP(file_obj.read(), conn)
 
-	print 'sendFile '
+	print 'File sent: ', fileName
 	#conn.flush
 	
 

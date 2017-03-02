@@ -28,14 +28,15 @@ def main(argv):
 	clientsocket.close()
 	
 def receiveFile(fileName,  conn):
-	text = Lib.readTextTCP(conn)
-	fileName = Lib.extractFilename(fileName)
+	text = Lib.readTextTCP(conn) # Save recieved message
+	fileName = Lib.extractFilename(fileName) # Remove path
 	print '4 Data received: ', fileName
-	text_obj = open(fileName, "w")
-	text_obj.write(text)
-	print 'Text obj: ', text_obj
-	text_obj.close()
-    
+	text_obj = open(fileName, "w") # Make new file
+	text_obj.write(text) # Write message to file
+	print 'Text obj: ', text_obj,
+	text_obj.close() # Save file
+    	filesize = Lib.check_File_Exists(fileName)
+	print '\nSize of file: ', filesize
 
 if __name__ == "__main__":
    main(sys.argv[1:])
