@@ -16,23 +16,26 @@ def main(argv):
 	Lib.writeTextTCP(fileName, clientsocket)
 	print '3 '
 	receiveFile(fileName, clientsocket)
-	print '5 ' 
-	receiveFile(fileName, clientsocket)
-	print '6 '
-	receiveFile(fileName, clientsocket)
-	print '7 '
-	receiveFile(fileName, clientsocket)
-	print '8 '
-	receiveFile(fileName, clientsocket)
-	print '9 '
+	print '5 File received. Closing connection.\n ' 
+
 	clientsocket.close()
 	
 def receiveFile(fileName,  conn):
-	text = Lib.readTextTCP(conn) # Save recieved message
+	size = Lib.readTextTCP(conn) # Save recieved message
 	fileName = Lib.extractFilename(fileName) # Remove path
-	print '4 Data received: ', fileName
+	print '4 Data size: ', long(size)
 	text_obj = open(fileName, "w") # Make new file
-	text_obj.write(text) # Write message to file
+
+	i = 0
+
+	while i < long(size):
+		text = conn.recv(BUFSIZE)
+		text_obj.write(text) # Write message to file
+		i = i + len(text)
+		print 'Text received: ', i, long(size)
+		if i >= size:
+			break
+
 	print 'Text obj: ', text_obj,
 	text_obj.close() # Save file
     	filesize = Lib.check_File_Exists(fileName)

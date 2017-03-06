@@ -11,23 +11,30 @@ BUFSIZE = 1000
 
 def main(argv): 
 	# TO DO Your Code
-	serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # INET equals streaming socket equals TCP
-	serversocket.bind((HOST,PORT)) 
-	serversocket.listen(1) # We want to queue up to just one client
-	#serversocket.setblocking(0)
+	try:
+		#Initiate server
+		serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # INET equals streaming socket equals TCP
+		
+		#Prevent socket from blocking
+		#serversocket.setblocking(0)
+		serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-	#try:
+		#Bind socket to PORT and localhost
+		serversocket.bind((HOST,PORT)) 
+		serversocket.listen(1) # We want to queue up to just one client
+		
+	except socket.error as msg:
+		print 'Error connecting with serversocket: %s\n Terminating program.' %msg
+		serversocket.close()
+		sys.exit()
+	
 	while(1):
 		#Wait for connections
 		(clientsocket, address) = serversocket.accept()
 		print 'Incomming connection from', address
-		
-		clientsocket.send("Hello. Connection established. \0")
 
 		filename = Lib.readTextTCP(clientsocket) #connect with client
-		#filename = clientsocket.recv(BUFSIZE)	#Connect with telnet	
 		print '1 ', filename
-			#filename = exctractFilename(text)
 	
 		filesize = Lib.check_File_Exists(filename) # returns size
 		print '2 filesize ', filesize
@@ -39,9 +46,7 @@ def main(argv):
 		print '3 Closing connection ', address
 		clientsocket.close()
 
-	#except socket.error, msg:
-	#	clientsocket.close()
-	#	serversocket.close()
+
 		
 			
 	
@@ -51,9 +56,22 @@ def main(argv):
 def sendFile(fileName,  fileSize,  conn):
 	# TO DO Your Code
 	#fileName = Lib.extractFilename(fileName)
-	file_obj = open(fileName, "r")
-	
-	Lib.writeTextTCP(file_obj.read(), conn)
+
+	i = 0
+	text = "."
+
+	#Sending size of requested file
+	Lib.writeTextTCP(str(fileSize), conn)
+
+	with open(fileName, "rb") as file_obj:
+		while 1: #text not == "":
+			text = file_obj.read(BUFSIZE)
+			i = i + 1
+			if text == "":
+				conn.send(text)		
+				break
+			conn.send(text)
+			print 'Packets sent: ', i
 
 	print 'File sent: ', fileName
 	#conn.flush
@@ -68,3 +86,5 @@ if __name__ == "__main__":
 
 #ref https://wiki.python.org/moin/TcpCommunication
 #ref https://docs.python.org/2/howto/sockets.html
+#ref https://docs.python.org/2/library/socket.html
+#ref http://stackoverflow.com/questions/25447803/python-socket-connection-exception
