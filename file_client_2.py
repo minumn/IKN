@@ -7,14 +7,21 @@ HOST = 'localhost'
 BUFSIZE = 1000
 
 def main(argv):
-	fileName = "/root/Exercises/index.jpeg"
-	#fileName = argv[1]
-	print '1 Filename: ', fileName	
+	#Fil som skal hentes
+	#fileName = "/var/www/html/anders.jpg"	#Hardcoded filsti
+	fileName = argv[0]	#Filsti som argument
+	print '1 Filename: ', fileName
+
+	# Oprettelse af socket.
 	clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	clientsocket.connect((HOST, PORT))
 	print '2 '
+
+	#Anmod server om fil gennem socket.
 	Lib.writeTextTCP(fileName, clientsocket)
 	print '3 '
+
+	#Vent paa at modtage fil
 	receiveFile(fileName, clientsocket)
 	print '5 File received. Closing connection.\n ' 
 
@@ -24,8 +31,8 @@ def receiveFile(fileName,  conn):
 	size = Lib.readTextTCP(conn) # Save recieved message
 	fileName = Lib.extractFilename(fileName) # Remove path
 	print '4 Data size: ', long(size)
-	text_obj = open("test.jpeg", "w") # Make new file
-    #text_obj = open(fileName, "w") # Make new file
+	text_obj = open(fileName, "w") # Make new file
+
 	i = 0
 
 	while i < long(size):
