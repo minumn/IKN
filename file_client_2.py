@@ -7,7 +7,7 @@ HOST = 'localhost'
 BUFSIZE = 1000
 
 def main(argv):
-	fileName = "/var/www/html/index.html"
+	fileName = "/root/Exercises/index.jpeg"
 	#fileName = argv[1]
 	print '1 Filename: ', fileName	
 	clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,8 +24,8 @@ def receiveFile(fileName,  conn):
 	size = Lib.readTextTCP(conn) # Save recieved message
 	fileName = Lib.extractFilename(fileName) # Remove path
 	print '4 Data size: ', long(size)
-	text_obj = open(fileName, "w") # Make new file
-
+	text_obj = open("test.jpeg", "w") # Make new file
+    #text_obj = open(fileName, "w") # Make new file
 	i = 0
 
 	while i < long(size):
