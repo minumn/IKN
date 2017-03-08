@@ -5,7 +5,7 @@ import sys
 import socket
 from lib import Lib
 
-HOST = ''
+HOST = 'localhost'
 PORT = 9000
 BUFSIZE = 1000
 
@@ -22,7 +22,8 @@ def main(argv):
 		#Bind socket to PORT and localhost
 		serversocket.bind((HOST,PORT)) 
 		serversocket.listen(1) # We want to queue up to just one client
-		
+		print 'Socket connection on: ', serversocket.getsockname()
+
 	except socket.error as msg:
 		print 'Error connecting with serversocket: %s\n Terminating program.' %msg
 		serversocket.close()
@@ -41,7 +42,9 @@ def main(argv):
 	
 		if filesize != 0:
 			sendFile(filename, filesize, clientsocket)
-		else: clientsocket.send("File " + filename + "doesnt exist. \0")
+		else: 
+			Lib.writeTextTCP("0", clientsocket)	
+			Lib.writeTextTCP("File " + filename + "doesnt exist.", clientsocket)			
 	
 		print '3 Closing connection ', address
 		clientsocket.close()
