@@ -42,7 +42,9 @@ def main(argv):
 	
 		if filesize != 0:
 			sendFile(filename, filesize, clientsocket)
-		else: clientsocket.send("File " + filename + "doesnt exist. \0")
+		else: 
+			Lib.writeTextTCP("0", clientsocket)	
+			Lib.writeTextTCP("File " + filename + "doesnt exist.", clientsocket)			
 	
 		print '3 Closing connection ', address
 		clientsocket.close()

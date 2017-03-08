@@ -32,7 +32,9 @@ def receiveFile(fileName,  conn):
 	fileName = Lib.extractFilename(fileName) # Remove path
 	print '4 Data size: ', long(size)
 	text_obj = open(fileName, "w") # Make new file
-
+	if long(size) == 0:
+		print 'File',fileName, 'doesn\'t exist. Closing connection.'
+		sys.exit()
 	i = 0
 
 	while i < long(size):
