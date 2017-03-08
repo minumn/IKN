@@ -13,7 +13,7 @@ def main(argv):
 	print '1 Filename: ', fileName
 
 	if argv[1]:
-	#	HOST = argv[1]
+		HOST = argv[1]
 		print HOST
 
 	# Oprettelse af socket.
