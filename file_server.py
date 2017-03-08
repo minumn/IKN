@@ -5,7 +5,7 @@ import sys
 import socket
 from lib import Lib
 
-HOST = 'localhost'
+HOST = ''
 PORT = 9000
 BUFSIZE = 1000
 

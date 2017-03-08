@@ -3,7 +3,7 @@ import socket
 from lib import Lib
 
 PORT = 9000
-HOST = 'localhost'
+HOST = ''
 BUFSIZE = 1000
 
 def main(argv):
@@ -11,6 +11,10 @@ def main(argv):
 	#fileName = "/var/www/html/anders.jpg"	#Hardcoded filsti
 	fileName = argv[0]	#Filsti som argument
 	print '1 Filename: ', fileName
+
+	if argv[1]:
+	#	HOST = argv[1]
+		print HOST
 
 	# Oprettelse af socket.
 	clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
