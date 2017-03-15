@@ -17,6 +17,7 @@ def main(argv):
 	
 	except socket.error as msg:
 		print 'Error 1 encountered: ', msg
+		s.close()
 		sys.exit()
 	
 	try:
@@ -33,6 +34,7 @@ def main(argv):
 			
 	except socket.error as msg:
 		print 'Error 2 encountered: ', msg
+		s.close()
 		sys.exit()
 	
 	
