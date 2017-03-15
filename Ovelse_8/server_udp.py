@@ -1,4 +1,4 @@
-%%%%% UDP Server %%%%%
+###### UDP Server ######
 
 import socket
 import sys
@@ -10,7 +10,7 @@ BUFSIZE = 1024
 def main(argv):
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 		s.bind((HOST, PORT))
 		
@@ -20,8 +20,8 @@ def main(argv):
 		sys.exit()
 	
 	try:
-		while(1)
-			data, address = s.recfrom(BUFSIZE)
+		while(1):
+			data, address = s.recvfrom(BUFSIZE)
 			print 'Message from: ', address
 			print 'Message received: ', data 
 			
