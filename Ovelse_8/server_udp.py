@@ -7,6 +7,17 @@ HOST = ''
 PORT = 9000
 BUFSIZE = 1024
 
+def sendFile(file_, address, socket):
+	text = "sdsdf" #= openFile(file_)
+	socket.sendto(text, (address, PORT))
+	
+	
+def openFile(file):
+	with open(file, "rb") as file_obj:
+		text = file_obj.read()
+	return text
+
+
 def main(argv):
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,10 +37,10 @@ def main(argv):
 			print 'Message from: ', address
 			print 'Message received: ', data
 			
-			if data == L:
-				sendFile("/proc/loadavg", adress)
-			if data == U:
-				sendFile("/proc/uptime", adress)
+			if data == "L":
+				sendFile("/proc/loadavg", address, s)
+			if data == "U":
+				sendFile("/proc/uptime", address, s)
 			else: print 'Command not recognized: ', data
 			
 	except socket.error as msg:
@@ -44,14 +55,5 @@ if __name__ == "__main__":
 	main(sys.argv[1:])
 	
 	
-def sendFile(file, address):
-	text = openFile(file)
-	s.sendto(text, (address, PORT))
-	
-	
-def openFile(file):
-	with open(file, "rb") as file_obj:
-		text = file_obj.read()
 
-	return text
 			
