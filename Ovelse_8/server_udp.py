@@ -29,7 +29,7 @@ def main(argv):
 				sendFile("/proc/loadavg", adress)
 			if data == U:
 				sendFile("/proc/uptime", adress)
-			else print 'Command not recognized: ', data
+			else: print 'Command not recognized: ', data
 			
 	except socket.error as msg:
 		print 'Error 2 encountered: ', msg
