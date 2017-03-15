@@ -23,7 +23,13 @@ def main(argv):
 		while(1):
 			data, address = s.recvfrom(BUFSIZE)
 			print 'Message from: ', address
-			print 'Message received: ', data 
+			print 'Message received: ', data
+			
+			if data == L:
+				sendFile("/proc/loadavg", adress)
+			if data == U:
+				sendFile("/proc/uptime", adress)
+			else print 'Command not recognized: ', data
 			
 	except socket.error as msg:
 		print 'Error 2 encountered: ', msg
@@ -34,3 +40,16 @@ def main(argv):
 	
 if __name__ == "__main__":
 	main(sys.argv[1:])
+	
+	
+def sendFile(file, address):
+	text = openFile(file)
+	s.sendto(text, (address, PORT))
+	
+	
+def openFile(file):
+	with open(file, "rb") as file_obj:
+		text = file_obj.read()
+
+	return text
+			
