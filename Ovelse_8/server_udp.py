@@ -10,6 +10,7 @@ BUFSIZE = 1024
 def sendFile(file_, address, socket):
 	text = openFile(file_)
 	socket.sendto(text, address)
+	print 'Returning ', file_
 	
 	
 def openFile(file_):
@@ -33,6 +34,7 @@ def main(argv):
 	
 	try:
 		while(1):
+			print '\nServer ready to receive data.'
 			data, address = s.recvfrom(BUFSIZE)
 			print 'Message from: ', address
 			print 'Message received: ', data
