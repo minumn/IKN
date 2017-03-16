@@ -44,6 +44,7 @@ def main(argv):
 			elif data == "U" or data == "u":
 				sendFile("/proc/uptime", address, s)
 			else: print 'Command not recognized: ', data
+				socket.sendto("Command not recognized", address)
 			
 	except socket.error as msg:
 		print 'Error 2 encountered: ', msg
