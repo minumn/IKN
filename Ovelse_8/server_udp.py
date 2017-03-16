@@ -39,9 +39,9 @@ def main(argv):
 			print 'Message from: ', address
 			print 'Message received: ', data
 			
-			if data == "L":
+			if data == "L" or data == "l":
 				sendFile("/proc/loadavg", address, s)
-			elif data == "U":
+			elif data == "U" or data == "u":
 				sendFile("/proc/uptime", address, s)
 			else: print 'Command not recognized: ', data
 			
