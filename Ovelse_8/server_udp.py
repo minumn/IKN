@@ -8,12 +8,12 @@ PORT = 9000
 BUFSIZE = 1024
 
 def sendFile(file_, address, socket):
-	text = "sdsdf" #= openFile(file_)
-	socket.sendto(text, (address, PORT))
+	text = openFile(file_)
+	socket.sendto(text, address)
 	
 	
-def openFile(file):
-	with open(file, "rb") as file_obj:
+def openFile(file_):
+	with open(file_, "rb") as file_obj:
 		text = file_obj.read()
 	return text
 
@@ -39,7 +39,7 @@ def main(argv):
 			
 			if data == "L":
 				sendFile("/proc/loadavg", address, s)
-			if data == "U":
+			elif data == "U":
 				sendFile("/proc/uptime", address, s)
 			else: print 'Command not recognized: ', data
 			
