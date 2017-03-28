@@ -1,3 +1,5 @@
+###### UDP Client ######
+
 import socket
 import sys
 
@@ -7,7 +9,7 @@ BUFFER_SIZE = 1024
 
 def main(argv):
 
-	# Create UDP socket
+	#Create UDP socket
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	sock.bind((UDP_HOST, UDP_PORT))
 
@@ -15,14 +17,14 @@ def main(argv):
 	addr = argv[1]
 	
 
-        # Send data
+        #Send data
         sock.sendto(cmd, (addr, UDP_PORT))
         
-        # Recieve response
+        #Recieve response
         data, addr = sock.recvfrom(BUFFER_SIZE)
         print 'Recieved: ', data
 
-        # Closing Socket
+        #Closing Socket
         print 'Closing socket'
         sock.close()
         
