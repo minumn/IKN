@@ -1,0 +1,18 @@
+
+
+int send(string* buffer, int length)
+{
+	
+	
+	for(i = 0; i < length(buffer); i++)
+	{
+		if(buffer(i) == 'A')
+	}
+
+}
+
+int rec(string* buffer)
+{
+
+
+}
