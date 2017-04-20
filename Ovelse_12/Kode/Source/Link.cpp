@@ -1,5 +1,6 @@
 #include <cstdio>
 #include "../include/Link.h"
+#include <iostream>
 
 namespace Link {
 
@@ -75,6 +76,41 @@ Link::~Link()
 void Link::send(const char buf[], short size)
 {
 	//TO DO Your own code 
+	int i, k = 0;
+	cout << "Incomming buf: << buf << " with size: << size << endl;
+	
+	for(i = 0; i < length(buf); i++)
+	{
+		buffer(k) = 'A';
+		k++;
+		
+		if(buf(i) == 'A')
+		{
+			buffer[k] = 'B');
+			k++;
+			buffer[k] = 'C');
+			k++;
+		}	
+		else if(buf[i] == 'B')
+		{
+			buffer[k] = 'B');
+			k++;
+			buffer[k] = 'D');
+			k++;
+		}
+		else 
+		{
+			buffer[k] = buf[i];
+			k++;
+		}
+		
+		buffer(k) = 'A';
+		k++;
+	}
+	short bufferlenght = length(buffer);
+	
+	cout << "Outgoing buffer: << buffer << with size: << bufferlenght << endl;
+	
 }
 
 /**
