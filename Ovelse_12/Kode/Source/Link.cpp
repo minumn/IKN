@@ -81,10 +81,10 @@ void Link::send(const char buf[], short size)
 	
 	for(i = 0; i < length(buf); i++)
 	{
-		buffer(k) = 'A';
+		buffer[k] = 'A';
 		k++;
 		
-		if(buf(i) == 'A')
+		if(buf[i] == 'A')
 		{
 			buffer[k] = 'B');
 			k++;
@@ -104,12 +104,12 @@ void Link::send(const char buf[], short size)
 			k++;
 		}
 		
-		buffer(k) = 'A';
+		buffer[k] = 'A';
 		k++;
 	}
-	short bufferlenght = length(buffer);
+	short bufferlength = length(buffer);
 	
-	cout << "Outgoing buffer: << buffer << with size: << bufferlenght << endl;
+	cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
 	
 }
 
