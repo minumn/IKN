@@ -125,6 +125,42 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
 	//TO DO Your own code
+	int i; k = 0;
+	cout << "Incomming buf:" << buf << " with size:" << size << endl;
+	
+	for(i = 0, i < length(buf),i++)
+	{
+		if(buf[i] == 'A')
+		{
+			i++;
+		}
+		else if(buf[i] == 'B')
+		{
+			++i;
+			
+			if(buf[i] == 'C')
+			{
+				buffer[k] == 'B';
+				k++:
+			}
+			else //(buf[i] == 'D')
+			{
+				buffer[k] == 'C';
+				k++;
+			}
+		}	
+		else
+		{
+			buffer[k] == buf[i];
+			k++;
+		}
+		
+	}
+	short bufferlength = length(buffer);
+	
+	cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
+	
+	return k+1;
 }
 
 } /* namespace Link */
