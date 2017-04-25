@@ -77,25 +77,25 @@ void Link::send(const char buf[], short size)
 {
 	//TO DO Your own code 
 	int i, k = 0;
-	cout << "Incomming buf:" << buf << " with size:" << size << endl;
+    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
 	
-	for(i = 0; i < length(buf); i++)
+    for(i = 0; i < size; i++)
 	{
 		buffer[k] = 'A';
 		k++;
 		
 		if(buf[i] == 'A')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'C');
+            buffer[k] = 'C';
 			k++;
 		}	
 		else if(buf[i] == 'B')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'D');
+            buffer[k] = 'D';
 			k++;
 		}
 		else 
@@ -107,9 +107,9 @@ void Link::send(const char buf[], short size)
 		buffer[k] = 'A';
 		k++;
 	}
-	short bufferlength = length(buffer);
+    //short bufferlength = length(buffer);
 	
-	cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
+    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
 	
 }
 
@@ -125,10 +125,10 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
 	//TO DO Your own code
-	int i; k = 0;
-	cout << "Incomming buf:" << buf << " with size:" << size << endl;
+    int i, k = 0;
+    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
 	
-	for(i = 0, i < length(buf),i++)
+    for(i = 0; i < size; i++)
 	{
 		if(buf[i] == 'A')
 		{
@@ -141,7 +141,7 @@ short Link::receive(char buf[], short size)
 			if(buf[i] == 'C')
 			{
 				buffer[k] == 'B';
-				k++:
+                k++;
 			}
 			else //(buf[i] == 'D')
 			{
@@ -156,11 +156,10 @@ short Link::receive(char buf[], short size)
 		}
 		
 	}
-	short bufferlength = length(buffer);
+    //short bufferlength = length(buffer);
 	
-	cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
+    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
 	
 	return k+1;
 }
-
 } /* namespace Link */
