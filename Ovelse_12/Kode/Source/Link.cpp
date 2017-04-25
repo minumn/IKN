@@ -77,7 +77,7 @@ void Link::send(const char buf[], short size)
 {
 	//TO DO Your own code 
 	int i, k = 0;
-	cout << "Incomming buf: << buf << " with size: << size << endl;
+	cout << "Incomming buf:" << buf << " with size:" << size << endl;
 	
 	for(i = 0; i < length(buf); i++)
 	{
