@@ -1,7 +1,7 @@
 //Main.cpp til test af LINK laget
 
 #include <iostream>
-#include "link.h"
+#include "include/Link.h"
 #include <string>
 
 int main()

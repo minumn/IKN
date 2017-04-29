@@ -1,8 +1,8 @@
-SOURCES=main.cpp Vector.cpp
+SOURCES=main.cpp Source/Link.cpp
 EXE=prog
 CXXFLAGS=-I.
 CXX = NO_ARCH
-EXT_LIBS=-lpthread #-lunistd -liostream
+EXT_LIBS= #-lpthread #-lunistd -liostream
 
 # Making for host
 # > make ARCH=host
