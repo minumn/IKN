@@ -77,25 +77,25 @@ void Link::send(const char buf[], short size)
 {
 	//TO DO Your own code 
 	int i, k = 0;
-	cout << "Incomming buf: << buf << " with size: << size << endl;
+    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
 	
-	for(i = 0; i < length(buf); i++)
+    for(i = 0; i < size; i++)
 	{
-		buffer(k) = 'A';
+		buffer[k] = 'A';
 		k++;
 		
-		if(buf(i) == 'A')
+		if(buf[i] == 'A')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'C');
+            buffer[k] = 'C';
 			k++;
 		}	
 		else if(buf[i] == 'B')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'D');
+            buffer[k] = 'D';
 			k++;
 		}
 		else 
@@ -104,12 +104,18 @@ void Link::send(const char buf[], short size)
 			k++;
 		}
 		
-		buffer(k) = 'A';
+		buffer[k] = 'A';
 		k++;
 	}
-	short bufferlenght = length(buffer);
+    //short bufferlength = length(buffer);
 	
-	cout << "Outgoing buffer: << buffer << with size: << bufferlenght << endl;
+    rc=v24Puts(UsedPort,msg);
+    if ( rc < strlen(msg) )
+    {
+        fputs("error: v24Puts failed.\n",stderr);
+    }
+
+    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
 	
 }
 
@@ -125,6 +131,74 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
 	//TO DO Your own code
-}
+    int i, k = 0;
+    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
+	
 
+
+    for(i = 0; i < size; i++)
+	{
+		if(buf[i] == 'A')
+		{
+			i++;
+		}
+		else if(buf[i] == 'B')
+		{
+			++i;
+			
+			if(buf[i] == 'C')
+			{
+				buffer[k] == 'B';
+                k++;
+			}
+			else //(buf[i] == 'D')
+			{
+				buffer[k] == 'C';
+				k++;
+			}
+		}	
+		else
+		{
+			buffer[k] == buf[i];
+			k++;
+		}
+		
+	}
+    //short bufferlength = length(buffer);
+
+    rc=v24Gets(UsedPort,answer,sizeof(answer)-1);
+    if ( rc < 0 )
+    {
+        fputs("error: v24Gets failed!\n",stderr);
+    }
+    else
+        printf("the answer is `%s'\n",answer);
+
+	
+    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
+	
+	return k+1;
+}
 } /* namespace Link */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
