@@ -17,7 +17,12 @@
 /// </summary>
 file_server::file_server ()
 {
+    char msg[100];
 	// TO DO Your own code
+    Transport::Transport conn(100);
+    conn.receive(msg, 100);
+    std::cout << "Message recieved: " << msg << std::endl;
+
 }
 
 /// <summary>
