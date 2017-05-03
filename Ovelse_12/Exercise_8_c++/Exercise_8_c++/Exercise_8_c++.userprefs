@@ -1,0 +1,48 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="file_server/file_server.cpp">
+    <Files>
+      <File FileName="LIB/lib.h" Line="24" Column="1" />
+      <File FileName="LIB/lib.cpp" Line="18" Column="17" />
+      <File FileName="file_client/file_client.cpp" Line="72" Column="20" />
+      <File FileName="file_server/file_server.cpp" Line="72" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="file_client" expanded="True" />
+          <Node name="file_server" expanded="True" selected="True" />
+          <Node name="LIB" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>buffer</Value>
+          <Value>idx</Value>
+          <Value>ackBuf</Value>
+          <Value>cnt</Value>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.file__client>
+    <MonoDevelop.Ide.CustomExecutionModes>
+      <Data Name="Default (Custom)" Id="8211f500-0499-432e-a2bb-6474cd9315c7" ModeId="Default" PromptForParameters="True">
+        <CommandData>
+          <Item Key="MonoDevelop.Ide.Execution.CustomArgsCustomizer">
+            <Value Arguments="127.0.0.1 Test" ctype="CustomArgsExecutionModeData">
+              <EnvironmentVariables />
+            </Value>
+          </Item>
+        </CommandData>
+      </Data>
+    </MonoDevelop.Ide.CustomExecutionModes>
+  </MonoDevelop.Ide.ItemProperties.file__client>
+</Properties>

@@ -75,27 +75,28 @@ Link::~Link()
  */
 void Link::send(const char buf[], short size)
 {
-	//TO DO Your own code 
-	int i, k = 0;
-	cout << "Incomming buf: << buf << " with size: << size << endl;
+    //TO DO Your own code
+    int i, k = 0;
+    std::cout << "Incomming buf to link:" << buf << " with size:" << size << std::endl;
 	
-	for(i = 0; i < length(buf); i++)
+    buffer[k] = 'A';
+    k++;
+
+    for(i = 0; i < size; i++)
 	{
-		buffer(k) = 'A';
-		k++;
-		
-		if(buf(i) == 'A')
+        std::cout << "Linker: k == " << k << ". i == " << i << std::endl;
+		if(buf[i] == 'A')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'C');
+            buffer[k] = 'C';
 			k++;
 		}	
 		else if(buf[i] == 'B')
 		{
-			buffer[k] = 'B');
+            buffer[k] = 'B';
 			k++;
-			buffer[k] = 'D');
+            buffer[k] = 'D';
 			k++;
 		}
 		else 
@@ -104,12 +105,22 @@ void Link::send(const char buf[], short size)
 			k++;
 		}
 		
-		buffer(k) = 'A';
-		k++;
 	}
-	short bufferlenght = length(buffer);
+
+    buffer[k] = 'A';
+    k++;
+
+    short bufferlength = sizeof(buffer);
+
+    int rc;
 	
-	cout << "Outgoing buffer: << buffer << with size: << bufferlenght << endl;
+    rc = v24Puts(serialPort, buffer);
+
+    if ( rc < sizeof(buffer) )
+    {
+        fputs("error: v24Puts failed.\n",stderr);
+    } else
+        std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
 	
 }
 
@@ -124,7 +135,73 @@ void Link::send(const char buf[], short size)
  */
 short Link::receive(char buf[], short size)
 {
-	//TO DO Your own code
+    //TO DO Your own code
+    int i, k = 0, rc;
+    
+    rc = v24Gets(serialPort, buffer, size);
+    if ( rc < 0 )
+    {
+        fputs("error: v24Gets failed!\n",stderr);
+    }
+    else
+        printf("the answer is `%s'\n", buf);
+
+    
+    for(i = 0; i < size; i++)
+	{
+		if(buffer[i] == 'A')
+		{
+			i++;
+		}
+		else if(buffer[i] == 'B')
+		{
+			++i;
+			
+			if(buffer[i] == 'C')
+			{
+				buf[k] = 'A';
+                k++;
+			}
+			else //(buffer[i] == 'D')
+			{
+				buf[k] = 'B';
+				k++;
+			}
+		}	
+		else
+		{
+			buf[k] = buffer[i];
+			k++;
+		}
+	}
+	
+    short bufferlength = sizeof(buf);
+
+    std::cout << "Recieved message:" << buf << " with size:" << bufferlength << " . k == " << k << std::endl;
+	
+	return k+1;
 }
 
 } /* namespace Link */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
