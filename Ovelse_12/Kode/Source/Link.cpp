@@ -77,13 +77,14 @@ void Link::send(const char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0;
-    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
+    std::cout << "Incomming buf to link:" << buf << " with size:" << size << std::endl;
 	
+    buffer[k] = 'A';
+    k++;
+
     for(i = 0; i < size; i++)
 	{
-		buffer[k] = 'A';
-		k++;
-		
+        std::cout << "Linker: k == " << k << ". i == " << i << std::endl;
 		if(buf[i] == 'A')
 		{
             buffer[k] = 'B';
@@ -104,17 +105,22 @@ void Link::send(const char buf[], short size)
 			k++;
 		}
 		
-		buffer[k] = 'A';
-		k++;
 	}
+
+    buffer[k] = 'A';
+    k++;
+
     short bufferlength = sizeof(buffer);
+
+    int rc;
 	
     rc = v24Puts(serialPort, buffer);
-    if ( rc < strlen(msg) )
+
+    if ( rc < sizeof(buffer) )
     {
         fputs("error: v24Puts failed.\n",stderr);
     } else
-    std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
+        std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
 	
 }
 
@@ -130,7 +136,7 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
     //TO DO Your own code
-    int i, k = 0;
+    int i, k = 0, rc;
     
     rc = v24Gets(serialPort, buffer, size);
     if ( rc < 0 )

@@ -6,6 +6,8 @@
 #include "../include/Transport.h"
 #include "../include/lib.h"
 #include "file_client.h"
+#include "../include/Link.h"
+#include <iostream>
 
 /// <summary>
 /// The BUFSIZE
@@ -27,6 +29,12 @@
 file_client::file_client(int argc, char **argv)
 {
     // TO DO Your own code
+    char msg[] = "HALLOW HAW ARE YOU BRO CC";
+    int size = sizeof(msg);
+
+    Transport::Transport conn(size);
+    std::cout << "Message to send: " << msg << "with size: " << size << std::endl;
+    conn.send(msg, size);
 }
 
 /// <summary>
