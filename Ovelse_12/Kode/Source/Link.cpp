@@ -75,8 +75,8 @@ Link::~Link()
  */
 void Link::send(const char buf[], short size)
 {
-	//TO DO Your own code 
-	int i, k = 0;
+    //TO DO Your own code
+    int i, k = 0;
     std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
 	
     for(i = 0; i < size; i++)
@@ -107,15 +107,15 @@ void Link::send(const char buf[], short size)
 		buffer[k] = 'A';
 		k++;
 	}
-    //short bufferlength = length(buffer);
+    short bufferlength = sizeof(buffer);
 	
-    rc=v24Puts(UsedPort,msg);
+   /* rc=v24Puts(UsedPort,msg);
     if ( rc < strlen(msg) )
     {
         fputs("error: v24Puts failed.\n",stderr);
-    }
+    }*/
 
-    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << endl;
+    std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
 	
 }
 
@@ -130,12 +130,10 @@ void Link::send(const char buf[], short size)
  */
 short Link::receive(char buf[], short size)
 {
-	//TO DO Your own code
+    //TO DO Your own code
     int i, k = 0;
     std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
 	
-
-
     for(i = 0; i < size; i++)
 	{
 		if(buf[i] == 'A')
@@ -164,9 +162,9 @@ short Link::receive(char buf[], short size)
 		}
 		
 	}
-    //short bufferlength = length(buffer);
+    short bufferlength = sizeof(buffer);
 
-    rc=v24Gets(UsedPort,answer,sizeof(answer)-1);
+    /*rc=v24Gets(UsedPort,answer,sizeof(answer)-1);
     if ( rc < 0 )
     {
         fputs("error: v24Gets failed!\n",stderr);
@@ -174,8 +172,8 @@ short Link::receive(char buf[], short size)
     else
         printf("the answer is `%s'\n",answer);
 
-	
-    //std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
+    */
+    std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
 	
 	return k+1;
 }

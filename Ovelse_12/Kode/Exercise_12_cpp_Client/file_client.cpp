@@ -26,7 +26,7 @@
 /// </param>
 file_client::file_client(int argc, char **argv)
 {
-   	// TO DO Your own code
+    // TO DO Your own code
 }
 
 /// <summary>
@@ -40,7 +40,7 @@ file_client::file_client(int argc, char **argv)
 /// </param>
 void file_client::receiveFile (std::string fileName, Transport::Transport *transport)
 {
-		// TO DO Your own code
+        // TO DO Your own code
 }		
 
 /// <summary>
