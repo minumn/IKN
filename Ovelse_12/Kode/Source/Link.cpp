@@ -131,9 +131,8 @@ short Link::receive(char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0;
-    std::cout << "Incomming buf:" << buf << " with size:" << size << std::endl;
-	
-    rc = v24Gets(serialPort, buf, size);
+    
+    rc = v24Gets(serialPort, buffer, size);
     if ( rc < 0 )
     {
         fputs("error: v24Gets failed!\n",stderr);
@@ -144,35 +143,35 @@ short Link::receive(char buf[], short size)
     
     for(i = 0; i < size; i++)
 	{
-		if(buf[i] == 'A')
+		if(buffer[i] == 'A')
 		{
 			i++;
 		}
-		else if(buf[i] == 'B')
+		else if(buffer[i] == 'B')
 		{
 			++i;
 			
-			if(buf[i] == 'C')
+			if(buffer[i] == 'C')
 			{
-				buffer[k] = 'A';
+				buf[k] = 'A';
                 k++;
 			}
-			else //(buf[i] == 'D')
+			else //(buffer[i] == 'D')
 			{
-				buffer[k] = 'B';
+				buf[k] = 'B';
 				k++;
 			}
 		}	
 		else
 		{
-			buffer[k] = buf[i];
+			buf[k] = buffer[i];
 			k++;
 		}
 	}
 	
-    short bufferlength = sizeof(buffer);
+    short bufferlength = sizeof(buf);
 
-    std::cout << "Incomming buffer:" << buffer << " with size:" << bufferlength << std::endl;
+    std::cout << "Recieved message:" << buf << " with size:" << bufferlength << " . k == " << k << std::endl;
 	
 	return k+1;
 }
