@@ -29,11 +29,11 @@
 file_client::file_client(int argc, char **argv)
 {
     // TO DO Your own code
-    char msg[] = "HALLOW HAW ARE YOU BRO CC";
+    char msg[] = "HALLO HOW ARE YOU BRO";
     int size = sizeof(msg);
 
     Transport::Transport conn(size);
-    std::cout << "Message to send: " << msg << "with size: " << size << std::endl;
+    std::cout << "Message to send: " << msg << " with size: " << size << std::endl;
     conn.send(msg, size);
 }
 
