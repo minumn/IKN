@@ -10,7 +10,7 @@ namespace Link {
   */
 Link::Link(int bufsize)
 {
-	buffer = new char[(bufsize*2)];
+        buffer = new char[(bufsize*2)+2];
 	
     serialPort=v24OpenPort("/dev/ttyS1",V24_STANDARD);
     if ( serialPort==NULL )
@@ -77,40 +77,39 @@ void Link::send(const char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0;
-    std::cout << "Incomming buf to link:" << buf << " with size:" << size << std::endl;
-	
+    std::cout << "Incomming buf to link: " << buf << " with size: " << size << std::endl;
+
     buffer[k] = 'A';
     k++;
 
     for(i = 0; i < size; i++)
 	{
         std::cout << "Linker: k == " << k << ". i == " << i << std::endl;
-		if(buf[i] == 'A')
+            if(buf[i] == 'A')
 		{
-            buffer[k] = 'B';
+                    buffer[k] = 'B';
 			k++;
-            buffer[k] = 'C';
+                    buffer[k] = 'C';
 			k++;
 		}	
 		else if(buf[i] == 'B')
 		{
-            buffer[k] = 'B';
+                    buffer[k] = 'B';
 			k++;
-            buffer[k] = 'D';
+                    buffer[k] = 'D';
 			k++;
 		}
 		else 
 		{
-			buffer[k] = buf[i];
-			k++;
-		}
-		
+                    buffer[k] = buf[i];
+                    k++;
+                }
+
 	}
+    buffer[k-1] = 'A';
 
-    buffer[k] = 'A';
-    k++;
 
-    short bufferlength = sizeof(buffer);
+    short bufferlength = k;
 
     int rc;
 	
@@ -120,7 +119,7 @@ void Link::send(const char buf[], short size)
     {
         fputs("error: v24Puts failed.\n",stderr);
     } else
-        std::cout << "Outgoing buffer:" << buffer << " with size:" << bufferlength << std::endl;
+        std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
 	
 }
 
