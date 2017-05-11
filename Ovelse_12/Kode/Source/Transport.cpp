@@ -87,8 +87,22 @@ namespace Transport
 	void Transport::send(const char buf[], short size)
 	{
 		// TO DO Your own code
+            for (int i = 0; i < size; i++)
+            {
+                buffer [i + 4] = buf[i];    // Transportlayer header
+            }
 
-        link->send(buf, size);
+            buffer[2] = seqNo;
+            buffer[3] = 0;      // Send data
+
+            checksum->calcChecksum (buffer, size + 4);   // Checksum of header
+
+            do
+            {
+                link->send(buffer, size + 4);
+            }
+            while(!receiveAck());
+
 	}
 
 	/// <summary>
