@@ -76,7 +76,7 @@ Link::~Link()
 void Link::send(const char buf[], short size)
 {
     //TO DO Your own code
-    int i, k = 0;
+    int i, k = 0, rc;
     std::cout << "Incomming buf to link: " << buf << " with size: " << size << std::endl;
 
     buffer[k] = 'A';
@@ -106,19 +106,17 @@ void Link::send(const char buf[], short size)
                 }
 
 	}
-    buffer[k-1] = 'A';
 
+    buffer[k-1] = 'A';
 
     short bufferlength = k;
 
-    int rc;
-	
     rc = v24Puts(serialPort, buffer);
-
-    if ( rc < sizeof(buffer) )
+    if (rc < sizeof(buffer))
     {
-        fputs("error: v24Puts failed.\n",stderr);
-    } else
+        fputs("ERROR: v24Puts failed.\n",stderr);
+    }
+    else
         std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
 	
 }
@@ -140,17 +138,16 @@ short Link::receive(char buf[], short size)
     rc = v24Gets(serialPort, buffer, size);
     if ( rc < 0 )
     {
-        fputs("error: v24Gets failed!\n",stderr);
+        fputs("ERROR: v24Gets failed!\n",stderr);
     }
     else
-        printf("the answer is `%s'\n", buf);
+       std::cout << "Incomming buffer: " << buffer << " with size: " << size << std::endl;
 
-    
     for(i = 0; i < size; i++)
 	{
 		if(buffer[i] == 'A')
 		{
-			i++;
+                        //i++;
 		}
 		else if(buffer[i] == 'B')
 		{
@@ -159,7 +156,7 @@ short Link::receive(char buf[], short size)
 			if(buffer[i] == 'C')
 			{
 				buf[k] = 'A';
-                k++;
+                                k++;
 			}
 			else //(buffer[i] == 'D')
 			{
@@ -174,11 +171,7 @@ short Link::receive(char buf[], short size)
 		}
 	}
 	
-    short bufferlength = sizeof(buf);
-
-    std::cout << "Recieved message:" << buf << " with size:" << bufferlength << " . k == " << k << std::endl;
-	
-	return k+1;
+    return size;
 }
 
 } /* namespace Link */
