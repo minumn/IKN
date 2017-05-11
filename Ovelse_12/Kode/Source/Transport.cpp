@@ -114,6 +114,20 @@ namespace Transport
 	short Transport::receive(char buf[], short size)
 	{
 		// TO DO Your own code
+		int counter, res;
+
+        do{
+            counter = link->receive(buffer,size);
+            res = checksum->checkChecksum(buffer, counter);
+            sendAck(res);
+        } while(!res);
+
+        for(int i = 0; i < counter - 4; i++)
+        {
+            buf[i] = buffer[i+4];
+        }
+
+        std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
         return link->receive(buf, size);
 	}
 }
