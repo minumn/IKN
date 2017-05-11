@@ -114,7 +114,7 @@ void Link::send(const char buf[], short size)
     rc = v24Puts(serialPort, buffer);
     if (rc < sizeof(buffer))
     {
-        fputs("ERROR: v24Puts failed.\n",stderr);
+        fputs("error: v24Puts failed.\n",stderr);
     }
     else
         std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
@@ -138,7 +138,7 @@ short Link::receive(char buf[], short size)
     rc = v24Gets(serialPort, buffer, size);
     if ( rc < 0 )
     {
-        fputs("ERROR: v24Gets failed!\n",stderr);
+        fputs("error: v24Gets failed!\n",stderr);
     }
     else
        std::cout << "Incomming buffer: " << buffer << " with size: " << size << std::endl;
