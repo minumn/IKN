@@ -99,9 +99,11 @@ namespace Transport
 
             do
             {
+                std::cout << "TRANSPORT: Sending buffer with size: " << size << std::endl;
                 link->send(buffer, size+4);
             }
-            while(!receiveAck());
+            while(!receiveAck()); // Send till we get an ackknowledge
+            std::cout << "TRANSPORT: Ack == 1 received.\n";
 
 	}
 
@@ -120,9 +122,9 @@ namespace Transport
             {
                 counter = link->receive(buffer,size);
                 res = checksum->checkChecksum(buffer, counter);
+                std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
             }
-
             while(!res);
 
             for(int i = 0; i < counter-4; i++)
