@@ -128,7 +128,7 @@ namespace Transport
         }
 
         std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
-        return link->receive(buf, size);
+        return (counter - 4);
 	}
 }
 
