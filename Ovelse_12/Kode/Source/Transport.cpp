@@ -86,20 +86,20 @@ namespace Transport
 	/// </param>
 	void Transport::send(const char buf[], short size)
 	{
-		// TO DO Your own code
+            // TO DO Your own code
             for (int i = 0; i < size; i++)
             {
-                buffer [i + 4] = buf[i];    // Transportlayer header
+                buffer [i+4] = buf[i];    // Transportlayer header
             }
 
             buffer[2] = seqNo;
             buffer[3] = 0;      // Send data
 
-            checksum->calcChecksum (buffer, size + 4);   // Checksum of header
+            checksum->calcChecksum (buffer, size+4);   // Checksum of header
 
             do
             {
-                link->send(buffer, size + 4);
+                link->send(buffer, size+4);
             }
             while(!receiveAck());
 
@@ -113,22 +113,27 @@ namespace Transport
 	/// </param>
 	short Transport::receive(char buf[], short size)
 	{
-		// TO DO Your own code
-		int counter, res;
+            // TO DO Your own code
+            int counter, res;
 
-        do{
-            counter = link->receive(buffer,size);
-            res = checksum->checkChecksum(buffer, counter);
-            sendAck(res);
-        } while(!res);
+            do
+            {
+                counter = link->receive(buffer,size);
+                res = checksum->checkChecksum(buffer, counter);
+                sendAck(res);
+            }
 
-        for(int i = 0; i < counter - 4; i++)
-        {
-            buf[i] = buffer[i+4];
-        }
+            while(!res);
 
-        std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
-        return (counter - 4);
+            for(int i = 0; i < counter-4; i++)
+            {
+                buf[i] = buffer[i+4];
+            }
+
+            std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
+            return (counter - 4);
+
+
 	}
 }
 

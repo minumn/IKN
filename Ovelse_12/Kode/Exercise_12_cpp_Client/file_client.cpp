@@ -49,43 +49,43 @@ file_client::file_client(int argc, char **argv)
 void file_client::receiveFile (std::string fileName, Transport::Transport *transport)
 {
     // TO DO Your own code : Kopieret fra Ovelse 8
-	long fileSize = getFileSizeTCP(transport);
-	long recvSize = 0;
-	int len;
-	char buffer[BUFSIZE] = {0}, str[33] = {0};
-	ofstream outFile;
+//    long fileSize = getFileSizeTCP(transport);
+//    long recvSize = 0;
+//    int len;
+//    char buffer[BUFSIZE] = {0}, str[33] = {0};
+//    ofstream outFile;
 
-	cout << "Fil størrelse: " << fileSize << "\n";
+//    std::cout << "Fil størrelse: " << fileSize << std::endl;
 
-	if(fileSize == 0)
-		cout << "Filen findes ikke på serveren\n";
-	else
-	{
-		printf("Filen overføres...\n");
-		outFile.open(extractFileName(fileName).c_str(),ios::out|ios::binary);
+//    if(fileSize == 0)
+//        cout << "Filen findes ikke på serveren\n";
+//    else
+//    {
+//        printf("Filen overføres...\n");
+//        outFile.open(extractFileName(fileName).c_str(),ios::out|ios::binary);
 
-        while ((long) recvSize < (long) fileSize)
-        {
-            len = read(transport, buffer, sizeof(buffer));
-            recvSize+= len;
-            outFile.write (buffer, len);
-            sprintf(str, "\rReceived: %6.1f%%", ((long)recvSize/1.0/(long) (fileSize)*100));
-            cout << str;
-        }
+//        while ((long) recvSize < (long) fileSize)
+//        {
+//            len = read(transport, buffer, sizeof(buffer));
+//            recvSize+= len;
+//            outFile.write (buffer, len);
+//            sprintf(str, "\rReceived: %6.1f%%", ((long)recvSize/1.0/(long) (fileSize)*100));
+//            cout << str;
+//        }
 
-        outFile.close();
+//        outFile.close();
 
-		if( recvSize == fileSize )
-		{
-		    cout << " OK\n";
-		}
-		else
-		{
-		    cout << " ERROR\n";
-		    remove(extractFileName(fileName).c_str());
-		}
+//        if( recvSize == fileSize )
+//        {
+//            cout << " OK\n";
+//        }
+//        else
+//        {
+//            cout << " ERROR\n";
+//            remove(extractFileName(fileName).c_str());
+//        }
 
-	}
+//    }
 }		
 
 /// <summary>
@@ -96,36 +96,36 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *trans
 /// </param>
 int main(int argc, char** argv)
 {
-	new file_client(argc, argv);
-	
-	// Kopieret fra Ovelse 8
-	    int sockfd = 0;
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
+    new file_client(argc, argv);
 
-    if (argc < 2)
-       error("FEJL: file_client <server ip-addresse> <[sti]filnavn>");
+    // Kopieret fra Ovelse 8
+//    int sockfd = 0;
+//    struct sockaddr_in serv_addr;
+//    struct hostent *server;
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-        error("FEJL: Åbning af socket");
-    server = gethostbyname(argv[1]);
-    if (server == NULL)
-        error("FEJL: Ingen sådanne host");
+//    if (argc < 2)
+//        error("FEJL: file_client <server ip-addresse> <[sti]filnavn>");
 
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    bcopy((char *)server->h_addr,
-         (char *)&serv_addr.sin_addr.s_addr,
-         server->h_length);
-    serv_addr.sin_port = htons(PORT);
-    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
-        error("FEJL: Forbinder");
+//    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+//    if (sockfd < 0)
+//        error("FEJL: Åbning af socket");
+//    server = gethostbyname(argv[1]);
+//    if (server == NULL)
+//        error("FEJL: Ingen sådanne host");
 
-    writeTextTCP(argv[2], sockfd);
-    receiveFile(argv[2], sockfd);
+//    bzero((char *) &serv_addr, sizeof(serv_addr));
+//    serv_addr.sin_family = AF_INET;
+//    bcopy((char *)server->h_addr,
+//          (char *)&serv_addr.sin_addr.s_addr,
+//          server->h_length);
+//    serv_addr.sin_port = htons(PORT);
+//    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
+//        error("FEJL: Forbinder");
 
-    close(sockfd);
-	
-	return 0;
+//    writeTextTCP(argv[2], sockfd);
+//    receiveFile(argv[2], sockfd);
+
+//    close(sockfd);
+
+    return 0;
 }
