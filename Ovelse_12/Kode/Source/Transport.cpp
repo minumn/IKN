@@ -130,8 +130,8 @@ namespace Transport
                 buf[i] = buffer[i+4];
             }
 
-            std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
-            return counter-4;
+            std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << "." << std::endl;
+            return (counter-4);
 
 	}
 }
