@@ -44,11 +44,8 @@ file_server::file_server ()
 
         fileSize = check_File_Exists(msg);
         std::cout << "FILESERVER: Filesize: " << fileSize << std::endl;
-        if(fileSize > 0)
-            this->sendFile(fileName, fileSize, &conn); // Send file
-        else
-            std::cout << "FILESERVER: Error. File doesn't exist.\n";
-
+        sendFile(fileName, fileSize, &conn); // Send file
+       
 //        msg = []; // Clear file name
     }
 }
@@ -76,7 +73,7 @@ void file_server::sendFile(std::string fileName, long fileSize, Transport::Trans
     std::ifstream::pos_type fposstart;
     sprintf(filesizeBuf,"%li", fileSize);
     std::cout << "FILESERVER: Sending " << filesizeBuf << std::endl;
-    conn->send(filesizeBuf, strlen(filesizeBuf)+1);
+    conn->send(filesizeBuf, strlen(filesizeBuf)+1); // Sending filesize
 
     if(fileSize > 0)
     {
