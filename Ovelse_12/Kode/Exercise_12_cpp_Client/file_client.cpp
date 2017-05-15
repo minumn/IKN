@@ -38,12 +38,12 @@ file_client::file_client(int argc, char **argv)
     Transport::Transport conn(BUFSIZE);
 
     // Anmod om fil
-    std::cout << "FILECLIENT: Requesting file: " << argv[1] << " with size " << size << std::endl;
-    conn->send(argv[1], sizeof(argv[1]));
+    std::cout << "FILECLIENT: Requesting file: " << argv[1] << std::endl;
+    conn.send(argv[1], sizeof(argv[1]));
 
     //Modtag fil
     std::cout << "FILECLIENT: Waiting to receive file...\n";
-    receiveFile(argv[1], conn);
+    receiveFile(argv[1], &conn);
 
     std::cout << "FILECLIENT: Answer received.";
 }
@@ -110,11 +110,11 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
 /// </param>
 int main(int argc, char** argv)
 {
-    std::cout << "MAIN: Starting new file client.";
+    std::cout << "MAIN: Starting new file client.\n";
 
     new file_client(argc, argv);
 
-    std::cout << "MAIN: Closing file client.";
+    std::cout << "MAIN: Closing file client.\n";
 
     return 0;
 }
