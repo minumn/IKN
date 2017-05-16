@@ -150,7 +150,9 @@ namespace Transport
                 sendAck(res);
                 std::cout << "TRANSPORT: Ack sent.\n";
             }
-            while(!res || (old_seqNo == buffer[SEQNO]));
+            while(!res || (!old_seqNo == buffer[SEQNO]));
+
+            std::cout << "TRANSPORT: Receive func: " << old_seqNo << ", " << buffer[SEQNO] << std::endl;
 
             for(int i = 0; i < counter-4; i++)
             {

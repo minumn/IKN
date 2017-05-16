@@ -110,6 +110,10 @@ void Link::send(const char buf[], short size)
             std::cout << "LINK: Buffer is now " << buffer << std::endl;
 	}
 
+    for(int i = 0; i < size; i++){
+        std::cout << "LINK: " << char(buffer[i]) << std::endl;
+    }
+
     std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
     buffer[k] = 'A';
@@ -146,7 +150,7 @@ short Link::receive(char buf[], short size)
         std::cout << "LINK: Reading char from port...\n";
         ch = v24Getc(serialPort);
         buffer[n] = ch;
-        std::cout << "LINK: Read char: " << ch << std::endl;
+        std::cout << "LINK: Read char: " << char(ch) << std::endl;
     }
     while(ch != 'A'); // Find first A
 
