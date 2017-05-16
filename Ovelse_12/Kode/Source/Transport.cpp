@@ -107,8 +107,8 @@ namespace Transport
             //buffer[size+4] = '\0';
             std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
-            buffer[SEQNO] = 4;
-            buffer[TYPE] = 2;      // Send data
+            buffer[SEQNO] = seqNo;
+            buffer[TYPE] = 0;      // Send data
 
             std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
