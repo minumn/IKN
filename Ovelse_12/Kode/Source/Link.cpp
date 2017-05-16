@@ -1,6 +1,8 @@
 #include <cstdio>
 #include "../include/Link.h"
 #include <iostream>
+#include <string.h>
+#include <ezV24/ezV24.h>
 
 namespace Link {
 
@@ -77,14 +79,14 @@ void Link::send(const char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0, rc;
-    std::cout << "Incomming buf to link: " << buf << " with size: " << size << std::endl;
+    std::cout << "lINK: Incomming buf to link: " << buf << " with size: " << size << std::endl;
 
     buffer[k] = 'A';
     k++;
 
     for(i = 0; i < size; i++)
 	{
-        std::cout << "Linker: k == " << k << ". i == " << i << std::endl;
+        std::cout << "LINK: k == " << k << ". i == " << i << std::endl;
             if(buf[i] == 'A')
 		{
                     buffer[k] = 'B';
@@ -105,19 +107,24 @@ void Link::send(const char buf[], short size)
                     k++;
                 }
 
+            std::cout << "LINK: Buffer is now " << buffer << std::endl;
 	}
 
-    buffer[k-1] = 'A';
+    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
+
+    buffer[k] = 'A';
+
+    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
     short bufferlength = k;
 
     rc = v24Puts(serialPort, buffer);
-    if (rc < sizeof(buffer))
+    if (rc < strlen(buffer))
     {
-        fputs("error: v24Puts failed.\n",stderr);
+        fputs("LINK: error: v24Puts failed.\n",stderr);
     }
     else
-        std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
+        std::cout << "LINK: Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
 	
 }
 
@@ -133,15 +140,20 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
     //TO DO Your own code
-    int i, k = 0, rc;
-    
-    rc = v24Gets(serialPort, buffer, size);
-    if ( rc < 0 )
-    {
-        fputs("error: v24Gets failed!\n",stderr);
+    int i, k = 0, rc, ch, n = 0;
+
+    do{
+        ch = v24Getc(serialPort);
     }
-    else
-       std::cout << "Incomming buffer: " << buffer << " with size: " << size << std::endl;
+    while(ch != 'A'); // Find first A
+
+    do{
+        ch = v24Getc(serialPort);
+        buffer[n] = ch;
+        n++;
+    }
+    while(ch != 'A');
+
 
     for(i = 0; i < size; i++)
 	{
