@@ -28,8 +28,8 @@ namespace Transport
 
 		bool receiveAck();
 		void sendAck (bool ackType);
-		Transport( const Transport &right){};
-		Transport& operator=(const Transport &) {};
+        Transport( const Transport &right){}
+        Transport& operator=(const Transport &) {}
 
 	};
 }

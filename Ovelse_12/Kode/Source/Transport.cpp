@@ -11,11 +11,11 @@ namespace Transport
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Transport"/> class.
 	/// </summary>
-	Transport::Transport (short BUFSIZE)
+    Transport::Transport (short bufsize)
 	{
-		link = new Link::Link(BUFSIZE+ACKSIZE);
+        link = new Link::Link(bufsize+ACKSIZE);
 		checksum = new Checksum();
-		buffer = new char[BUFSIZE+ACKSIZE];
+        buffer = new char[bufsize+ACKSIZE];
         //buffer = {0};
 		seqNo = 0;
 		old_seqNo = DEFAULT_SEQNO;
@@ -45,6 +45,8 @@ namespace Transport
         std::cout << "TRANSPORT: RECEIVE ACK\n";
         recvSize = link->receive(buffer, ACKSIZE);
         dataReceived = true;
+
+        std::cout << "TRANSPORT: receiveAck func.\n";
 
         if (recvSize == ACKSIZE)
         {
@@ -105,11 +107,11 @@ namespace Transport
             std::cout << "TRANSPORT: Buffer 1: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
             memcpy(buffer+4, buf, size);
-            //buffer[size+4] = '\0';
+            buffer[size+4] = '\0';
             std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
-            buffer[SEQNO] = seqNo;
-            buffer[TYPE] = 0;      // Send data
+            //buffer[SEQNO] = seqNo;
+            //buffer[TYPE] = DATA;      // Send data
 
             std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
