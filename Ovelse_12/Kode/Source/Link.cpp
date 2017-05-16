@@ -1,6 +1,7 @@
 #include <cstdio>
 #include "../include/Link.h"
 #include <iostream>
+#include <string.h>
 
 namespace Link {
 
@@ -105,14 +106,19 @@ void Link::send(const char buf[], short size)
                     k++;
                 }
 
+            std::cout << "LINK: Buffer is now " << buffer << std::endl;
 	}
 
+    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
+
     buffer[k-1] = 'A';
+
+    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
     short bufferlength = k;
 
     rc = v24Puts(serialPort, buffer);
-    if (rc < sizeof(buffer))
+    if (rc < strlen(buffer))
     {
         fputs("error: v24Puts failed.\n",stderr);
     }

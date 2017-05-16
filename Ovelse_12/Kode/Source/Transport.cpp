@@ -16,6 +16,7 @@ namespace Transport
 		link = new Link::Link(BUFSIZE+ACKSIZE);
 		checksum = new Checksum();
 		buffer = new char[BUFSIZE+ACKSIZE];
+        //buffer = {0};
 		seqNo = 0;
 		old_seqNo = DEFAULT_SEQNO;
 		errorCount = 0;
@@ -87,20 +88,27 @@ namespace Transport
 	void Transport::send(const char buf[], short size)
 	{
             // TO DO Your own code
-        std::cout << "TRANSPORT: Send func received '" << buf << "' with size " << size << std::endl;
+            std::cout << "TRANSPORT: Send func received '" << buf << "' with size " << size << std::endl;
+            std::cout << "TRANSPORT: Buffer 1: '" << buffer << "' with size " << size << "\n";
+
             for (int i = 0; i < size; i++)
             {
                 buffer [i+4] = buf[i];    // Transportlayer header
             }
+            std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << size << "\n";
 
             buffer[2] = seqNo;
             buffer[3] = 0;      // Send data
 
+            std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << size << "\n";
+
             checksum->calcChecksum (buffer, size+4);   // Checksum of header
+
+            std::cout << "TRANSPORT: Buffer 4: '" << buffer << "' with size " << size << "\n";
 
             do
             {
-                std::cout << "TRANSPORT: Sending buffer with size: " << size << std::endl;
+                std::cout << "TRANSPORT: Sending buffer " << buffer << " with size: " << size << std::endl;
                 link->send(buffer, size+4);
             }
             while(!receiveAck()); // Send till we get an ackknowledge
