@@ -114,7 +114,7 @@ int main(int argc, char** argv)
     std::cout << "\nMAIN: Starting new file client.\n";
 
     //new file_client(argc, argv);
-    int size;
+    int size = 100;
     //const char msg[] = "HEJ JONAS BROTHER.";
     Link::Link conn(size);
     conn.send("HEJ JONAS BROTHER", strlen("HEJ JONAS BROTHER"));
