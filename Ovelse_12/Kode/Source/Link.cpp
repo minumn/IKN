@@ -110,7 +110,7 @@ void Link::send(const char buf[], short size)
             std::cout << "LINK: Buffer is now " << linkBuffer << std::endl;
 	}
 
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < k; i++){
         std::cout << "LINK: " << char(linkBuffer[i]) << std::endl;
     }
 
@@ -158,7 +158,7 @@ short Link::receive(char buf[], short size)
 
     do{
         ch = v24Getc(serialPort);
-        std::cout << "LINK: Read char: " << ch << std::endl;
+        std::cout << "LINK: Read char: " << char(ch) << std::endl;
         linkBuffer[n] = ch;
         n++;
     }
