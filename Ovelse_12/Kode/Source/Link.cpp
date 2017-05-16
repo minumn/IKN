@@ -117,6 +117,7 @@ void Link::send(const char buf[], short size)
     std::cout << "LINK: buffer " << linkBuffer << " with length " << k << std::endl;
 
     linkBuffer[k] = 'A';
+    k++;
 
     std::cout << "LINK: buffer " << linkBuffer << " with length " << k << std::endl;
 
