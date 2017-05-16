@@ -109,7 +109,13 @@ void file_server::sendFile(std::string fileName, long fileSize, Transport::Trans
 /// </param>
 int main(int argc, char **argv)
 {
-	new file_server();
-	
+    //new file_server();
+    int size = 100;
+    Link::Link conn(size);
+    char buff[size];
+    conn.receive(buff, size);
+
+    std::cout << "Message received: " << buff << std::endl;
+
 	return 0;
 }
