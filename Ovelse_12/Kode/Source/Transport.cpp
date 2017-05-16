@@ -87,6 +87,7 @@ namespace Transport
 	void Transport::send(const char buf[], short size)
 	{
             // TO DO Your own code
+        std::cout << "TRANSPORT: Send func received '" << buf << "' with size " << size << std::endl;
             for (int i = 0; i < size; i++)
             {
                 buffer [i+4] = buf[i];    // Transportlayer header

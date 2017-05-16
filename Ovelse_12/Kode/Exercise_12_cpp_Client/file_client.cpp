@@ -39,7 +39,7 @@ file_client::file_client(int argc, char **argv)
 
     // Anmod om fil
     std::cout << "FILECLIENT: Requesting file: " << argv[1] << std::endl;
-    conn.send(argv[1], sizeof(argv[1]));
+    conn.send(argv[1], strlen(argv[1]));
 
     //Modtag fil
     std::cout << "FILECLIENT: Waiting to receive file...\n";
@@ -63,7 +63,7 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
     short size = 50;
     char buff[size];
     std::cout << "FILE CLIENT: Waiting to receive filesize...\n";
-    conn->receive(buff, sizeof(buff)); // Get filesize
+    conn->receive(buff, strlen(buff)); // Get filesize
     long fileSize = atoi(buff);
     long recvSize = 0;
     int len;
@@ -81,7 +81,7 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
 
         while ((long) recvSize < (long) fileSize)
         {
-            len = conn->receive(buffer, sizeof(buffer));
+            len = conn->receive(buffer, strlen(buffer));
             recvSize+= len;
             outFile.write (buffer, len);
             sprintf(str, "\rReceived: %6.1f%%", ((long)recvSize/1.0/(long) (fileSize)*100));
