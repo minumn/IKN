@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 {
     //new file_server();
     int size = 100;
-    Link::Link conn(size);
+    Transport::Transport conn(size);
     char buff[size];
     conn.receive(buff, size);
 

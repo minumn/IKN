@@ -116,7 +116,7 @@ int main(int argc, char** argv)
     //new file_client(argc, argv);
     int size = 100;
     //const char msg[] = "HEJ JONAS BROTHER.";
-    Link::Link conn(size);
+    Transport::Transport conn(size);
     conn.send("HEJ JONAS BROTHER", strlen("HEJ JONAS BROTHER"));
 
     std::cout << "MAIN: Closing file client.\n";
