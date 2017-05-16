@@ -77,11 +77,11 @@ Link::~Link()
  */
 void Link::send(const char buf[], short size)
 {
-    //TO DO Your own code
     int i, k = 0, rc;
     std::cout << "lINK: Incomming buf to link: " << buf << " with size: " << size << std::endl;
 
-    buffer[k] = 'A';
+    unsigned char linkBuffer[size*2+2];
+    linkBuffer[k] = 'A';
     k++;
 
     for(i = 0; i < size; i++)
@@ -89,46 +89,44 @@ void Link::send(const char buf[], short size)
         std::cout << "LINK: k == " << k << ". i == " << i << std::endl;
             if(buf[i] == 'A')
 		{
-                    buffer[k] = 'B';
+                    linkBuffer[k] = 'B';
 			k++;
-                    buffer[k] = 'C';
+                    linkBuffer[k] = 'C';
 			k++;
 		}	
 		else if(buf[i] == 'B')
 		{
-                    buffer[k] = 'B';
+                    linkBuffer[k] = 'B';
 			k++;
-                    buffer[k] = 'D';
+                    linkBuffer[k] = 'D';
 			k++;
 		}
 		else 
 		{
-                    buffer[k] = buf[i];
+                    linkBuffer[k] = buf[i];
                     k++;
                 }
 
-            std::cout << "LINK: Buffer is now " << buffer << std::endl;
+            std::cout << "LINK: Buffer is now " << linkBuffer << std::endl;
 	}
 
     for(int i = 0; i < size; i++){
-        std::cout << "LINK: " << char(buffer[i]) << std::endl;
+        std::cout << "LINK: " << char(linkBuffer[i]) << std::endl;
     }
 
-    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
+    std::cout << "LINK: buffer " << linkBuffer << " with length " << k << std::endl;
 
-    buffer[k] = 'A';
+    linkBuffer[k] = 'A';
 
-    std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
+    std::cout << "LINK: buffer " << linkBuffer << " with length " << k << std::endl;
 
-    short bufferlength = k;
-
-    rc = v24Puts(serialPort, buffer);
-    if (rc < strlen(buffer))
+    rc = v24Write(serialPort, linkBuffer, k);
+    if (rc < k)
     {
         fputs("LINK: error: v24Puts failed.\n",stderr);
     }
     else
-        std::cout << "LINK: Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
+        std::cout << "LINK: Outgoing buffer: " << linkBuffer << " with size: " << k << std::endl;
 	
 }
 
@@ -145,11 +143,12 @@ short Link::receive(char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0, rc, ch, n = 0;
+    unsigned char linkBuffer[size*2+2];
 
     do{
         std::cout << "LINK: Reading char from port...\n";
         ch = v24Getc(serialPort);
-        buffer[n] = ch;
+        linkBuffer[n] = ch;
         std::cout << "LINK: Read char: " << char(ch) << std::endl;
     }
     while(ch != 'A'); // Find first A
@@ -160,25 +159,25 @@ short Link::receive(char buf[], short size)
     do{
         ch = v24Getc(serialPort);
         std::cout << "LINK: Read char: " << ch << std::endl;
-        buffer[n] = ch;
+        linkBuffer[n] = ch;
         n++;
     }
     while(ch != 'A');
 
-    std::cout << "LINK: Message received: " << buffer << std::endl;
+    std::cout << "LINK: Message received: " << linkBuffer << std::endl;
     std::cout << "LINK: Decoding...\n";
 
     for(i = 0; i < size; i++)
 	{
-		if(buffer[i] == 'A')
+        if(linkBuffer[i] == 'A')
 		{
                         //i++;
 		}
-		else if(buffer[i] == 'B')
+        else if(linkBuffer[i] == 'B')
 		{
 			++i;
 			
-			if(buffer[i] == 'C')
+            if(linkBuffer[i] == 'C')
 			{
 				buf[k] = 'A';
                                 k++;
@@ -191,13 +190,13 @@ short Link::receive(char buf[], short size)
 		}	
 		else
 		{
-			buf[k] = buffer[i];
+            buf[k] = linkBuffer[i];
 			k++;
 		}
 	}
     std::cout << "LINK: Message after decoding: " << buf << std::endl;
 	
-    return size;
+    return k;
 }
 
 } /* namespace Link */
