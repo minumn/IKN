@@ -54,6 +54,7 @@ namespace Transport
             {
                 std::cout << "TRANSPORT: RECEIVE ACK. ACK BAD\n";
                 std::cout << "TRANSPORT: ACK: " << (!checksum->checkChecksum(buffer, ACKSIZE)) << ", " << (buffer[SEQNO] != seqNo) << ", " << (buffer[TYPE] != ACK) << std::endl;
+                std::cout << "TRANSPORT: " << buffer[SEQNO] << ", " << seqNo << std::endl;
                 return false;
             }
 
