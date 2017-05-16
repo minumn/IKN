@@ -110,6 +110,10 @@ void Link::send(const char buf[], short size)
             std::cout << "LINK: Buffer is now " << buffer << std::endl;
 	}
 
+    for(int i = 0; i < size; i++){
+        std::cout << "LINK: " << char(buffer[i]) << std::endl;
+    }
+
     std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
     buffer[k] = 'A';
