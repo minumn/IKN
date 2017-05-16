@@ -42,7 +42,7 @@ namespace Transport
 	/// </returns>
 	bool Transport::receiveAck()
 	{
-        std::cout << "TRANPORT: RECEIVE ACK\n";
+        std::cout << "TRANSPORT: RECEIVE ACK\n";
         recvSize = link->receive(buffer, ACKSIZE);
         dataReceived = true;
 
@@ -53,6 +53,7 @@ namespace Transport
                 buffer[TYPE] != ACK)
             {
                 std::cout << "TRANSPORT: RECEIVE ACK. ACK BAD\n";
+                std::cout << "TRANSPORT: ACK: " << (!checksum->checkChecksum(buffer, ACKSIZE)) << ", " << (buffer[SEQNO] != seqNo) << ", " << (buffer[TYPE] != ACK) << std::endl;
                 return false;
             }
 
