@@ -60,23 +60,24 @@ file_client::file_client(int argc, char **argv)
 void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
 {
     // TO DO Your own code : Kopieret fra Ovelse 8
-/*    char *buff[];
+    short size = 50;
+    char buff[size];
     std::cout << "FILE CLIENT: Waiting to receive filesize...\n";
-    conn->receive(buff, 100); // Get filesize
+    conn->receive(buff, sizeof(buff)); // Get filesize
     long fileSize = atoi(buff);
     long recvSize = 0;
     int len;
     char buffer[BUFSIZE] = {0}, str[33] = {0};
-    ofstream outFile;
+    std::ofstream outFile;
 
     std::cout << "Fil størrelse: " << fileSize << std::endl;
 
     if(fileSize == 0)
-        cout << "Filen findes ikke på serveren\n";
+        std::cout << "Filen findes ikke på serveren\n";
     else
     {
         printf("Filen overføres...\n");
-        outFile.open(extractFileName(fileName).c_str(),ios::out|ios::binary);
+        outFile.open(extractFileName(fileName).c_str(),std::ios::out|std::ios::binary);
 
         while ((long) recvSize < (long) fileSize)
         {
@@ -84,22 +85,22 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
             recvSize+= len;
             outFile.write (buffer, len);
             sprintf(str, "\rReceived: %6.1f%%", ((long)recvSize/1.0/(long) (fileSize)*100));
-            cout << str;
+            std::cout << str;
         }
 
         outFile.close();
 
         if( recvSize == fileSize )
         {
-            cout << " OK\n";
+            std::cout << " OK\n";
         }
         else
         {
-            cout << " ERROR\n";
+            std::cout << " ERROR\n";
             remove(extractFileName(fileName).c_str());
         }
 
-    }*/
+    }
 }		
 
 /// <summary>
