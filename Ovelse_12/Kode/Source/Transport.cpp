@@ -144,9 +144,8 @@ namespace Transport
                 res = checksum->checkChecksum(buffer, counter);
                 std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
-                //old_seqNo
             }
-            while(!res);
+            while(!res || (old_seqNO == buffer[SEQNO]));
 
             for(int i = 0; i < counter-4; i++)
             {
