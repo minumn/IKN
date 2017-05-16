@@ -113,7 +113,11 @@ int main(int argc, char** argv)
 {
     std::cout << "\nMAIN: Starting new file client.\n";
 
-    new file_client(argc, argv);
+    //new file_client(argc, argv);
+    int size;
+    //const char msg[] = "HEJ JONAS BROTHER.";
+    Link::Link conn(size);
+    conn.send("HEJ JONAS BROTHER", strlen("HEJ JONAS BROTHER"));
 
     std::cout << "MAIN: Closing file client.\n";
 
