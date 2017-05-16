@@ -88,33 +88,39 @@ namespace Transport
 	void Transport::send(const char buf[], short size)
 	{
             // TO DO Your own code
+        char array[size+4] = {0};
+        buffer = array;
+        for(int i = 0; i<4;i++){
+            buffer[i] = '2';
+        }
             std::cout << "TRANSPORT: Send func received '" << buf << "' with size " << size << std::endl;
-            std::cout << "TRANSPORT: Buffer 1: '" << buffer << "' with size " << size << "\n";
 
-            for (int i = 0; i < size; i++)
-            {
-                buffer [i+4] = buf[i];    // Transportlayer header
-            }
-            std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << size << "\n";
+            std::cout << "TRANSPORT: Buffer 1: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
-            buffer[2] = seqNo;
-            buffer[3] = 0;      // Send data
+            memcpy(buffer+4, buf, size);
+            //buffer[size+4] = '\0';
+            std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
-            std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << size << "\n";
+            buffer[SEQNO] = 4;
+            buffer[TYPE] = 2;      // Send data
+
+            std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
             checksum->calcChecksum (buffer, size+4);   // Checksum of header
 
-            std::cout << "TRANSPORT: Buffer 4: '" << buffer << "' with size " << size << "\n";
+            std::cout << "TRANSPORT: Buffer 4: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
 
             do
             {
-                std::cout << "TRANSPORT: Sending buffer " << buffer << " with size: " << size << std::endl;
+                std::cout << "TRANSPORT: Sending buffer " << buffer << " with size: " << strlen(buffer) << std::endl;
                 link->send(buffer, size+4);
             }
             while(!receiveAck()); // Send till we get an ackknowledge
             std::cout << "TRANSPORT: Ack == 1 received.\n";
 
-	}
+            old_seqNo = DEFAULT_SEQNO;
+
+    }
 
 	/// <summary>
 	/// Receive the specified buffer.
@@ -133,6 +139,7 @@ namespace Transport
                 res = checksum->checkChecksum(buffer, counter);
                 std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
+                //old_seqNo
             }
             while(!res);
 
@@ -142,6 +149,7 @@ namespace Transport
             }
 
             std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
+            old_seqNo = buffer[SEQNO];
             return (counter - 4);
 
 

@@ -2,6 +2,7 @@
 #include "../include/Link.h"
 #include <iostream>
 #include <string.h>
+#include <ezV24/ezV24.h>
 
 namespace Link {
 
@@ -111,7 +112,7 @@ void Link::send(const char buf[], short size)
 
     std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
-    buffer[k-1] = 'A';
+    buffer[k] = 'A';
 
     std::cout << "LINK: buffer " << buffer << " with length " << strlen(buffer) << std::endl;
 
@@ -139,15 +140,20 @@ void Link::send(const char buf[], short size)
 short Link::receive(char buf[], short size)
 {
     //TO DO Your own code
-    int i, k = 0, rc;
-    
-    rc = v24Gets(serialPort, buffer, size);
-    if ( rc < 0 )
-    {
-        fputs("error: v24Gets failed!\n",stderr);
+    int i, k = 0, rc, ch, n = 0;
+
+    do{
+        ch = v24Getc(serialPort);
     }
-    else
-       std::cout << "Incomming buffer: " << buffer << " with size: " << size << std::endl;
+    while(ch != 'A'); // Find first A
+
+    do{
+        ch = v24Getc(serialPort);
+        buffer[n] = ch;
+        n++;
+    }
+    while(ch != 'A');
+
 
     for(i = 0; i < size; i++)
 	{

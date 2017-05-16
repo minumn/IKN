@@ -111,7 +111,7 @@ void file_client::receiveFile (std::string fileName, Transport::Transport *conn)
 /// </param>
 int main(int argc, char** argv)
 {
-    std::cout << "MAIN: Starting new file client.\n";
+    std::cout << "\nMAIN: Starting new file client.\n";
 
     new file_client(argc, argv);
 
