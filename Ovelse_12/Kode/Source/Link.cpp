@@ -143,12 +143,16 @@ short Link::receive(char buf[], short size)
     int i, k = 0, rc, ch, n = 0;
 
     do{
+        std::cout << "LINK: Reading char from port...\n";
         ch = v24Getc(serialPort);
+        std::cout << "LINK: Read char: " << ch << std::endl;
     }
     while(ch != 'A'); // Find first A
 
+    ch = '.';
     do{
         ch = v24Getc(serialPort);
+        std::cout << "LINK: Read char: " << ch << std::endl;
         buffer[n] = ch;
         n++;
     }
