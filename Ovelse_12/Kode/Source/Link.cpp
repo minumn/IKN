@@ -143,17 +143,26 @@ short Link::receive(char buf[], short size)
     int i, k = 0, rc, ch, n = 0;
 
     do{
+        std::cout << "LINK: Reading char from port...\n";
         ch = v24Getc(serialPort);
+        buffer[n] = ch;
+        std::cout << "LINK: Read char: " << ch << std::endl;
     }
     while(ch != 'A'); // Find first A
 
+    ch = '.';
+    n++;
+
     do{
         ch = v24Getc(serialPort);
+        std::cout << "LINK: Read char: " << ch << std::endl;
         buffer[n] = ch;
         n++;
     }
     while(ch != 'A');
 
+    std::cout << "LINK: Message received: " << buffer << std::endl;
+    std::cout << "LINK: Decoding...\n";
 
     for(i = 0; i < size; i++)
 	{
@@ -182,6 +191,7 @@ short Link::receive(char buf[], short size)
 			k++;
 		}
 	}
+    std::cout << "LINK: Message after decoding: " << buf << std::endl;
 	
     return size;
 }

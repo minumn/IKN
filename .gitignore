@@ -6,3 +6,5 @@
 *.db
 *.user
 *Debug*
+*.o
+Exercise_12_Client

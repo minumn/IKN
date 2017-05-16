@@ -80,6 +80,7 @@ namespace Transport
 		checksum->calcChecksum (ackBuf, ACKSIZE);
         std::cout << "SENDING ACK " << ackType << "\n";
 		link->send(ackBuf, ACKSIZE);
+        std::cout << "TRANSPORT: Ack sent.\n";
 	}
 
 	/// <summary>
@@ -142,10 +143,12 @@ namespace Transport
 
             do
             {
+                std::cout << "TRANPORT: Reading from link...\n";
                 counter = link->receive(buffer,size);
                 res = checksum->checkChecksum(buffer, counter);
                 std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
+                std::cout << "TRANSPORT: Ack sent.\n";
             }
             while(!res || (old_seqNo == buffer[SEQNO]));
 
