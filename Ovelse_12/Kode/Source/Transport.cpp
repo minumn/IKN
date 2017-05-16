@@ -98,31 +98,32 @@ namespace Transport
 	{
             // TO DO Your own code
         char array[size+4] = {0};
-        buffer = array;
+        memcpy(array+4, buf, size);
+
         for(int i = 0; i<4;i++){
             buffer[i] = '2';
         }
             std::cout << "TRANSPORT: Send func received '" << buf << "' with size " << size << std::endl;
 
-            std::cout << "TRANSPORT: Buffer 1: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
+            std::cout << "TRANSPORT: Buffer 1: '" << array << "' with size " << strlen(array) << " " << sizeof(array) << "\n";
 
-            memcpy(buffer+4, buf, size);
-            buffer[size+4] = '\0';
-            std::cout << "TRANSPORT: Buffer 2: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
+            memcpy(array+4, buf, size);
+            array[size+4] = '\0';
+            std::cout << "TRANSPORT: Buffer 2: '" << array << "' with size " << strlen(array) << " " << sizeof(array) << "\n";
 
-            //buffer[SEQNO] = seqNo;
-            //buffer[TYPE] = DATA;      // Send data
+            buffer[SEQNO] = seqNo;
+            buffer[TYPE] = DATA;      // Send data
 
-            std::cout << "TRANSPORT: Buffer 3: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
+            std::cout << "TRANSPORT: Buffer 3: '" << array << "' with size " << strlen(array) << " " << sizeof(array) << "\n";
 
-            checksum->calcChecksum (buffer, size+4);   // Checksum of header
+            checksum->calcChecksum (array, size+2);   // Checksum of header
 
-            std::cout << "TRANSPORT: Buffer 4: '" << buffer << "' with size " << strlen(buffer) << " " << sizeof(buffer) << "\n";
+            std::cout << "TRANSPORT: Buffer 4: '" << array << "' with size " << strlen(array) << " " << sizeof(array) << "\n";
 
             do
             {
-                std::cout << "TRANSPORT: Sending buffer " << buffer << " with size: " << strlen(buffer) << std::endl;
-                link->send(buffer, size+4);
+                std::cout << "TRANSPORT: Sending buffer " << array << " with size: " << strlen(array) << std::endl;
+                link->send(array, size+4);
                 std::cout << "TRANSPORT: Waiting for ACK\n";
             }
             while(!receiveAck()); // Send till we get an ackknowledge
@@ -147,25 +148,20 @@ namespace Transport
             {
                 std::cout << "TRANPORT: Reading from link...\n";
                 counter = link->receive(buffer,size);
-                res = checksum->checkChecksum(buffer, counter);
+                res = checksum->checkChecksum(buffer, counter-2);
                 std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
                 std::cout << "TRANSPORT: Ack sent.\n";
             }
-            while(!res || (!old_seqNo == buffer[SEQNO]));
+            while(!res || !(old_seqNo == buffer[SEQNO]));
 
             std::cout << "TRANSPORT: Receive func: " << old_seqNo << ", " << buffer[SEQNO] << std::endl;
 
-            for(int i = 0; i < counter-4; i++)
-            {
-                buf[i] = buffer[i+4];
-            }
+            memcpy(buf, buffer+4, counter-4);
 
             std::cout << "TRANSPORT: " << buf << ", " << buffer << ", " << size << ", " << counter << ". \n";
             old_seqNo = buffer[SEQNO];
             return (counter - 4);
-
-
 	}
 }
 
