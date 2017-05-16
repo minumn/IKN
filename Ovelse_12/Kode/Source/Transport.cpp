@@ -76,7 +76,7 @@ namespace Transport
         ackBuf [SEQNO] = (ackType ? (buffer [SEQNO] + 1) % 2 : buffer [SEQNO]) ;
         ackBuf [TYPE] = ACK;
 		checksum->calcChecksum (ackBuf, ACKSIZE);
-        std::cout << "SENDING ACK\n";
+        std::cout << "SENDING ACK " << ackType << "\n";
 		link->send(ackBuf, ACKSIZE);
 	}
 
@@ -145,7 +145,7 @@ namespace Transport
                 std::cout << "TRANSPORT: Package received with size: " << counter << " and checksum status: " << res << std::endl;
                 sendAck(res);
             }
-            while(!res || (old_seqNO == buffer[SEQNO]));
+            while(!res || (old_seqNo == buffer[SEQNO]));
 
             for(int i = 0; i < counter-4; i++)
             {
