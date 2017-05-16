@@ -124,7 +124,7 @@ void Link::send(const char buf[], short size)
         fputs("error: v24Puts failed.\n",stderr);
     }
     else
-        std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
+        std::cout << "LINK: Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
 	
 }
 

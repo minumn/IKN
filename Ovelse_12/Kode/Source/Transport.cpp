@@ -114,6 +114,7 @@ namespace Transport
             {
                 std::cout << "TRANSPORT: Sending buffer " << buffer << " with size: " << strlen(buffer) << std::endl;
                 link->send(buffer, size+4);
+                std::cout << "TRANSPORT: Waiting for ACK\n";
             }
             while(!receiveAck()); // Send till we get an ackknowledge
             std::cout << "TRANSPORT: Ack == 1 received.\n";
