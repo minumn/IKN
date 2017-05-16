@@ -72,15 +72,15 @@ void file_server::sendFile(std::string fileName, long fileSize, Transport::Trans
     std::ifstream inFile;
     std::ifstream::pos_type fposstart;
     sprintf(filesizeBuf,"%li", fileSize);
-    std::cout << "FILESERVER: Sending " << filesizeBuf << std::endl;
-    conn->send(filesizeBuf, strlen(filesizeBuf)+1); // Sending filesize
+    std::cout << "FILESERVER: Sending FILESIZE " << filesizeBuf << std::endl;
+    conn->send(filesizeBuf, strlen(filesizeBuf)); // Sending filesize
 
     if(fileSize > 0)
     {
         inFile.open(fileName.c_str(), std::ios::in | std::ios::binary);
         if(inFile.is_open())
         {
-            std::cout << "Sending the file named " << fileName << "\n";
+            std::cout << "FILESERVER: Sending the file named " << fileName << "\n";
 
             while(!inFile.eof())
             {
@@ -95,9 +95,9 @@ void file_server::sendFile(std::string fileName, long fileSize, Transport::Trans
         }
     }
     else
-        std::cout << "The file " << fileName << " not found\n";
+        std::cout << "FILESERVER: The file " << fileName << " not found\n";
 
-    std::cout << "Finish file sending...\n";
+    std::cout << "FILESERVER: Finish file sending...\n";
 
     }
 
@@ -110,7 +110,6 @@ void file_server::sendFile(std::string fileName, long fileSize, Transport::Trans
 int main(int argc, char **argv)
 {
 	new file_server();
-	
 	
 	return 0;
 }

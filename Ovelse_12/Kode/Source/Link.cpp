@@ -79,14 +79,14 @@ void Link::send(const char buf[], short size)
 {
     //TO DO Your own code
     int i, k = 0, rc;
-    std::cout << "Incomming buf to link: " << buf << " with size: " << size << std::endl;
+    std::cout << "lINK: Incomming buf to link: " << buf << " with size: " << size << std::endl;
 
     buffer[k] = 'A';
     k++;
 
     for(i = 0; i < size; i++)
 	{
-        std::cout << "Linker: k == " << k << ". i == " << i << std::endl;
+        std::cout << "LINK: k == " << k << ". i == " << i << std::endl;
             if(buf[i] == 'A')
 		{
                     buffer[k] = 'B';
@@ -121,10 +121,10 @@ void Link::send(const char buf[], short size)
     rc = v24Puts(serialPort, buffer);
     if (rc < strlen(buffer))
     {
-        fputs("error: v24Puts failed.\n",stderr);
+        fputs("LINK: error: v24Puts failed.\n",stderr);
     }
     else
-        std::cout << "Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
+        std::cout << "LINK: Outgoing buffer: " << buffer << " with size: " << bufferlength << std::endl;
 	
 }
 
